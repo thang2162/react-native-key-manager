@@ -17,19 +17,32 @@ const KeyManager = NativeModules.KeyManager
       }
     );
 
-export function SetKey(alias: string, key: string): Promise<any> {
+export type KeyManagerRepsonseType = {
+  success: boolean;
+  alias?: string;
+  key?: string;
+  message?: string;
+};
+
+export function SetKey(
+  alias: string,
+  key: string
+): Promise<KeyManagerRepsonseType> {
   return KeyManager.SetKey(alias, key);
 }
 
-export function UpdateKey(alias: string, key: string): Promise<any> {
+export function UpdateKey(
+  alias: string,
+  key: string
+): Promise<KeyManagerRepsonseType> {
   return KeyManager.UpdateKey(alias, key);
 }
 
-export function GetKey(alias: string): Promise<any> {
+export function GetKey(alias: string): Promise<KeyManagerRepsonseType> {
   return KeyManager.GetKey(alias);
 }
 
-export function DeleteKey(alias: string): Promise<any> {
+export function DeleteKey(alias: string): Promise<KeyManagerRepsonseType> {
   return KeyManager.DeleteKey(alias);
 }
 
@@ -47,14 +60,17 @@ export function GenerateKey(length: number = 8) {
   return pass;
 }
 
-export async function CreateOrGetKey(alias: string, length: number = 32) {
+export async function CreateOrGetKey(
+  alias: string,
+  length: number = 32
+): Promise<KeyManagerRepsonseType> {
   try {
-    const Key = await KeyManager.GetKey(alias);
+    const Key: KeyManagerRepsonseType = await KeyManager.GetKey(alias);
     return Key;
   } catch (e) {
     console.log(e);
     await KeyManager.SetKey(alias, GenerateKey(length));
-    const Key = await KeyManager.GetKey(alias);
+    const Key: KeyManagerRepsonseType = await KeyManager.GetKey(alias);
     return Key;
   }
 }
