@@ -5,7 +5,7 @@ A package for securely generating and mananging keys in React-Native.
 ## Installation
 
 ```sh
-npm install react-native-key-mamager --save
+npm install react-native-key-manager --save
 
 cd ios && pod install && cd ..
 ```
@@ -13,7 +13,7 @@ cd ios && pod install && cd ..
 or
 
 ```sh
-yarn add react-native-key-mamager
+yarn add react-native-key-manager
 
 cd ios && pod install && cd ..
 ```
