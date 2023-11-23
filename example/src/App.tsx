@@ -1,18 +1,20 @@
 import * as React from 'react';
 
 import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from 'react-native-key-manager';
+import { CreateOrGetKey } from 'react-native-key-manager';
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
+  const [key, setKey] = React.useState<string | undefined>();
 
   React.useEffect(() => {
-    multiply(3, 7).then(setResult);
+    CreateOrGetKey('testKey').then((res) => {
+      setKey(res.key);
+    });
   }, []);
 
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
+      <Text>Result: {key}</Text>
     </View>
   );
 }
