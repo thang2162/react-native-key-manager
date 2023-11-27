@@ -24,6 +24,9 @@ export type KeyManagerRepsonseType = {
   message?: string;
 };
 
+const defaultCharSet =
+  'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$';
+
 export function SetKey(
   alias: string,
   key: string
@@ -46,14 +49,12 @@ export function DeleteKey(alias: string): Promise<KeyManagerRepsonseType> {
   return KeyManager.DeleteKey(alias);
 }
 
-export function GenerateKey(
-  length: number = 8,
-  characterSet: string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$'
-) {
+export function GenerateKey(length?: number, characterSet?: string) {
   let pass = '';
-  let str = characterSet;
+  let str = characterSet ?? defaultCharSet;
+  const len = length ?? 8;
 
-  for (let i = 1; i <= length; i++) {
+  for (let i = 1; i <= len; i++) {
     let char = Math.floor(Math.random() * str.length + 1);
 
     pass += str.charAt(char);
@@ -64,15 +65,18 @@ export function GenerateKey(
 
 export async function CreateOrGetKey(
   alias: string,
-  length: number = 32,
-  characterSet: string
+  length?: number,
+  characterSet?: string
 ): Promise<KeyManagerRepsonseType> {
   try {
     const Key: KeyManagerRepsonseType = await KeyManager.GetKey(alias);
     return Key;
   } catch (e) {
     console.log(e);
-    await KeyManager.SetKey(alias, GenerateKey(length, characterSet));
+    await KeyManager.SetKey(
+      alias,
+      GenerateKey(length ?? 32, characterSet ?? defaultCharSet)
+    );
     const Key: KeyManagerRepsonseType = await KeyManager.GetKey(alias);
     return Key;
   }
