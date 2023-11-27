@@ -49,10 +49,10 @@ const result = await GenerateKey();
 4. DeleteUser(alias: string) - Deletes the alias.
    Returns: Promise that resolves with object {success: true, message: response_text} if success or rejects with message if fail.
 
-5. CreateOrGetKey(alias: string, length: number (Optional)) - Creates or Rertives a Key.
+5. CreateOrGetKey(alias: string, length: number (Optional), characterSet: string (Optional)) - Creates or Rertives a Key.
    Returns: Promise that resolves with object {success: true, alias: "alias", key: "key"} if success or rejects with message if fail.
 
-6. GenerateKey(length: number (Optional)) - Creates a Key.
+6. GenerateKey(length: number (Optional), characterSet: string (Optional)) - Creates a Key.
    Returns: String of a random key of desired length.
 
 ## Contributing
